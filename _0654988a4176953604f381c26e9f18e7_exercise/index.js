@@ -1,26 +1,19 @@
 module.exports = {
+  on: function (event, subscriber, handler) {
+    // notificationsArray.push({
+    //   key: event,
+    //   text: "Произошло новое событие " + event,
+    // });
+    handler.call(subscriber);
 
-    /**
-     * @param {String} event
-     * @param {Object} subscriber
-     * @param {Function} handler
-     */
-    on: function (event, subscriber, handler) {
+    return this;
+  },
 
-    },
+  off: function (event, subscriber) {
+    return this;
+  },
 
-    /**
-     * @param {String} event
-     * @param {Object} subscriber
-     */
-    off: function (event, subscriber) {
-
-    },
-
-    /**
-     * @param {String} event
-     */
-    emit: function (event) {
-
-    }
+  emit: function (event) {
+    return this;
+  },
 };

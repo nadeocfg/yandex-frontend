@@ -1,15 +1,21 @@
 const emitter = {
   on: function (event, subscriber, handler) {
-    notificationsArray.push({
-      key: event,
-      text: "Произошло новое событие " + event,
-    });
+    // notificationsArray.push({
+    //   key: event,
+    //   text: "Произошло новое событие " + event,
+    // });
     handler.call(subscriber);
+
+    return this;
   },
 
-  off: function (event, subscriber) {},
+  off: function (event, subscriber) {
+    return this;
+  },
 
-  emit: function (event) {},
+  emit: function (event) {
+    return this;
+  },
 };
 
 // Определим объект для счетчика нотификаций
@@ -27,9 +33,16 @@ var logger = {
 
 const notificationsArray = [];
 
-emitter.on("new_notification", notifications, notifications.count).on("new_notification", logger, function () {
-  this.logs.push("Произошло новое событие new_notification");
-});
+emitter
+  .on("new_notification", notifications, notifications.count)
+  .on("new_notification", logger, function () {
+    this.logs.push("Произошло новое событие new_notification");
+  })
+  .on("new_notification", logger, function () {
+    // this указывает на logger
+    this.logs.push("Добавлена новая нотификация. Количество - " + notifications.counter);
+  })
+  .emit("new_notification");
 
-console.log(notificationsArray);
-console.log(notifications.counter);
+// console.log(logger);
+// console.log(notifications.counter);
